@@ -21,7 +21,7 @@ colnames(df) = c("Date", "Time", "Global_active_power", "Global_reactive_power",
 
 
 # initiate PNG device
-png("plot2.png", bg="transparent", width=480, height=480)
+png("plot2.png", width=480, height=480)
 
 # format date and time
 df$Date = strptime(paste(df[,1], df[,2]), "%d/%m/%Y %H:%M:%S")

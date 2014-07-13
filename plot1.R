@@ -20,7 +20,7 @@ setnames(df,
            "Sub_metering_3"))
 
 # initiate PNG device
-png("plot2.png", bg="transparent", width=480, height=480)
+png("plot1.png", width=480, height=480)
 
 # create plot
 hist(df[,Global_active_power], main="Global Active Power", col="red",

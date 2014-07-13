@@ -18,7 +18,7 @@ colnames(df) = c("Date", "Time", "Global_active_power", "Global_reactive_power",
                  "Sub_metering_3")
 
 # initiate PNG device
-png("plot4.png", bg="transparent", width=480, height=480)
+png("plot4.png", width=480, height=480)
 
 # set 2*2 canvas
 par(mfrow = c(2,2))
