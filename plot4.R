@@ -1,0 +1,52 @@
+require(data.table)
+
+# Download data set
+download.file("https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip",
+              destfile = "exdata_data_household_power_consumption.zip",
+              method = "curl")
+
+# unzip the zipped data set
+unzip(zipfile="exdata_data_household_power_consumption.zip", files="household_power_consumption.txt")
+
+# read data set but only from the dates 2007-02-01 and 2007-02-02
+df = read.csv("household_power_consumption.txt", sep=";", header=F,
+              skip=66637, nrows = 2880, stringsAsFactors=F)
+
+# rename variables
+colnames(df) = c("Date", "Time", "Global_active_power", "Global_reactive_power",
+                 "Voltage", "Global_intensity", "Sub_metering_1", "Sub_metering_2",
+                 "Sub_metering_3")
+
+# initiate PNG device
+png("plot4.png", bg="transparent", width=480, height=480)
+
+# set 2*2 canvas
+par(mfrow = c(2,2))
+
+# create variable datetime
+df$datetime = strptime(paste(df[,1], df[,2]), "%d/%m/%Y %H:%M:%S")
+
+# plot 1,1
+plot(df$datetime, df$Global_active_power, type="l", xlab="",
+     ylab="Globa Active Power (kilowatts)")
+
+# plot 1,2
+plot(df$datetime, df$Voltage, type="l", xlab="datetime", ylab="Voltage")
+
+# plot 2,1
+plot(df$datetime, df$Sub_metering_1, type="l", xlab="",
+     ylab="Energy sub metering")
+lines(df$datetime, df$Sub_metering_2, col="red")
+lines(df$datetime, df$Sub_metering_3, col="blue")
+legend("topright", legend=c("Sub_metering_1", "Sub_metering_2", "Sub_metering_3"),
+       bty="n", col=c("black", "red", "blue"), lty=1)
+
+# plot 2,2
+plot(df$datetime, df$Global_reactive_power, type="l",
+     xlab="datetime", ylab="Global_Reactive_Power")
+
+# close PNG device
+dev.off()
+
+# set canvas back to 1*1
+par(mfrow = c(1,1))
